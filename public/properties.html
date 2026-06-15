@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Properties — Al-Hammad Associate</title>
+  <meta name="description" content="Browse premium residential and commercial properties in Karachi — for sale, rent, and purchase.">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .properties-page { padding: 64px 0 96px; }
+    .results-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      font-weight: 500;
+    }
+    .results-meta strong { color: var(--text-primary); }
+  </style>
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <span style="color:#aaa;">Properties</span>
+      </div>
+      <h1>Our Property Listings</h1>
+    </div>
+  </div>
+
+  <section class="properties-page">
+    <div class="container">
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <span class="filter-label">Filter by:</span>
+        <button class="filter-btn active" data-filter="All">All Properties</button>
+        <button class="filter-btn" data-filter="For Sale">For Sale</button>
+        <button class="filter-btn" data-filter="For Rent">For Rent</button>
+        <button class="filter-btn" data-filter="For Purchase">For Purchase</button>
+      </div>
+
+      <!-- Results Meta -->
+      <div class="results-meta" id="resultsMeta">Loading properties…</div>
+
+      <!-- Grid -->
+      <div class="properties-grid" id="propertiesGrid">
+        <!-- Injected by properties.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="js/components.js"></script>
+  <script src="js/properties.js"></script>
+</body>
+</html>

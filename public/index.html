@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al-Hammad Associate — Premium Real Estate in Karachi</title>
+  <meta name="description" content="Al-Hammad Associate offers premium residential and commercial properties in Karachi. Find your dream home or investment property today.">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ── Intro Section ─────────────────────────────────────────────── */
+    .intro-section {
+      padding: 96px 0;
+    }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .intro-content .section-title { text-align: left; }
+    .intro-content .section-divider { margin-left: 0; margin-bottom: 24px; }
+    .intro-content p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .intro-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+    .intro-media { position: relative; }
+    .intro-media img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+    }
+    .intro-media__accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 180px;
+      height: 180px;
+      background: var(--maroon);
+      border-radius: var(--radius-lg);
+      z-index: -1;
+      opacity: 0.12;
+    }
+    .intro-media__card {
+      position: absolute;
+      top: 32px;
+      right: -28px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 180px;
+    }
+    .intro-media__card .ic {
+      width: 44px; height: 44px;
+      background: var(--maroon-muted);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .intro-media__card .ic svg { width: 22px; height: 22px; fill: var(--maroon); }
+    .intro-media__card .num {
+      font-size: 1.4rem; font-weight: 800; color: var(--text-primary);
+      letter-spacing: -0.02em; line-height: 1;
+    }
+    .intro-media__card .lbl { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; }
+
+    /* ── CTA Section ────────────────────────────────────────────────── */
+    .cta-section {
+      background: var(--maroon);
+      padding: 80px 0;
+    }
+    .cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+    .cta-text h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .cta-text p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+    }
+    .cta-actions { display: flex; gap: 14px; flex-wrap: wrap; flex-shrink: 0; }
+
+    @media (max-width: 900px) {
+      .intro-grid { grid-template-columns: 1fr; gap: 48px; }
+      .intro-media__card { right: 12px; }
+      .cta-inner { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 768px) {
+      .intro-section { padding: 64px 0; }
+      .intro-media img { height: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Shared Header -->
+  <div id="site-header"></div>
+
+  <!-- ── Hero ────────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero__bg" id="heroBg"></div>
+    <div class="hero__overlay"></div>
+    <div class="container">
+      <div class="hero__content">
+        <div class="hero__eyebrow">Karachi's Premier Real Estate</div>
+        <h1 class="hero__title">
+          Find Your Perfect<br>
+          Property in <em>Karachi</em>
+        </h1>
+        <p class="hero__sub">
+          Al-Hammad Associate brings you an exclusive selection of residential villas, apartments, and commercial spaces across Karachi's most coveted locations.
+        </p>
+        <div class="hero__actions">
+          <a href="properties.html" class="btn btn-primary btn-lg">Explore Properties</a>
+          <a href="contact.html"    class="btn btn-white btn-lg">Contact Us</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero__scroll" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ── Stats ───────────────────────────────────────────────────────────── -->
+  <div id="stats" style="padding: 0; background: var(--white);">
+    <div class="container" style="padding-top: 0; padding-bottom: 0;">
+      <div class="stats-row" style="border-radius:0; border-left:none; border-right:none; border-top:none;">
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Properties Listed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">15+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1200+</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Premium Locations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Introduction ────────────────────────────────────────────────────── -->
+  <section class="intro-section">
+    <div class="container">
+      <div class="intro-grid">
+        <div class="intro-content">
+          <span class="section-label">About Al-Hammad Associate</span>
+          <h2 class="section-title">Trusted Real Estate<br>Experts in Karachi</h2>
+          <div class="section-divider"></div>
+          <p>
+            With over 15 years of experience in Karachi's dynamic real estate market, Al-Hammad Associate has built a reputation for integrity, professionalism, and unparalleled service. Located in the heart of North Nazimabad, we serve clients across the entire city.
+          </p>
+          <p>
+            Whether you're searching for a luxury family home, a lucrative commercial investment, or the perfect rental apartment, our expert team is dedicated to making your property journey seamless and successful.
+          </p>
+          <div class="intro-actions">
+            <a href="about.html"      class="btn btn-primary">Our Story</a>
+            <a href="properties.html" class="btn btn-outline">View Properties</a>
+          </div>
+        </div>
+        <div class="intro-media">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=900&q=80" alt="Premium properties in Karachi">
+          <div class="intro-media__accent"></div>
+          <div class="intro-media__card">
+            <div class="ic">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <div>
+              <div class="num">50+</div>
+              <div class="lbl">Prime Locations</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Featured Properties ─────────────────────────────────────────────── -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Hand-picked for You</span>
+        <h2 class="section-title">Featured Properties</h2>
+        <div class="section-divider"></div>
+        <p class="section-sub">Explore our curated selection of premium residential and commercial properties across Karachi's finest neighbourhoods.</p>
+      </div>
+
+      <div class="properties-grid" id="featuredGrid">
+        <!-- Injected by main.js -->
+      </div>
+
+      <div style="text-align:center; margin-top: 52px;">
+        <a href="properties.html" class="btn btn-primary btn-lg">View All Properties</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Why Choose Us ───────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Why Choose Us</span>
+        <h2 class="section-title">The Al-Hammad Difference</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="properties-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+        <div style="background:var(--white);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:36px 28px;transition:transform var(--transition),box-shadow var(--transition);"
+             onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-md)'"
+             onmouseleave="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:52px;height:52px;background:var(--maroon-muted);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--maroon)"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:10px;">Verified Listings</h3>
+          <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">Every property in our portfolio is personally verified for accuracy, legal clarity, and quality.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:36px 28px;transition:transform var(--transition),box-shadow var(--transition);"
+             onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-md)'"
+             onmouseleave="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:52px;height:52px;background:var(--maroon-muted);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--maroon)"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:10px;">Expert Guidance</h3>
+          <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">Our seasoned team of property consultants guides you through every step of your real estate journey.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:36px 28px;transition:transform var(--transition),box-shadow var(--transition);"
+             onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-md)'"
+             onmouseleave="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:52px;height:52px;background:var(--maroon-muted);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--maroon)"><path d="M11.5 2C6.81 2 3 5.81 3 10.5S6.81 19 11.5 19h.5v3c4.86-2.34 8-7 8-11.5C20 5.81 16.19 2 11.5 2zm1 14.5h-2v-2h2v2zm0-4h-2c0-3.25 3-3 3-5 0-1.1-.9-2-2-2s-2 .9-2 2h-2c0-2.21 1.79-4 4-4s4 1.79 4 4c0 2.5-3 2.75-3 5z"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:10px;">Transparent Process</h3>
+          <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">No hidden fees, no surprises. We believe in complete transparency throughout every transaction.</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:36px 28px;transition:transform var(--transition),box-shadow var(--transition);"
+             onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-md)'"
+             onmouseleave="this.style.transform='';this.style.boxShadow=''">
+          <div style="width:52px;height:52px;background:var(--maroon-muted);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--maroon)"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+          </div>
+          <h3 style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:10px;">Fast Response</h3>
+          <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">Submit an inquiry and our team will respond within hours, not days. Your time is valuable to us.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ─────────────────────────────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-text">
+          <h2>Ready to Find Your Dream Property?</h2>
+          <p>Let our experts guide you to the perfect home or investment in Karachi. Call us or browse our listings today.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="properties.html"   class="btn btn-white btn-lg">Browse Properties</a>
+          <a href="tel:+923102206228" class="btn btn-outline" style="color:white;border-color:rgba(255,255,255,0.5);"
+             onmouseenter="this.style.background='rgba(255,255,255,0.1)'"
+             onmouseleave="this.style.background='transparent'">
+            Call Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script src="js/components.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

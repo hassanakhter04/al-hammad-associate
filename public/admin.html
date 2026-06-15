@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Al-Hammad Associate</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { background: var(--light-gray); }
+
+    /* Tab system */
+    .tab-nav {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 28px;
+      background: var(--white);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 6px;
+      width: fit-content;
+    }
+    .tab-btn {
+      padding: 9px 20px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: transparent;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .tab-btn.active {
+      background: var(--maroon);
+      color: var(--white);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Badge in table */
+    .status-chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .chip-sale     { background: rgba(128,0,32,0.12); color: var(--maroon); }
+    .chip-rent     { background: rgba(26,107,60,0.12); color: #1a6b3c; }
+    .chip-purchase { background: rgba(26,60,107,0.12); color: #1a3c6b; }
+
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #b45309;
+      background: #fef3c7;
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- ─── LOGIN SCREEN ──────────────────────────────────────────────────────── -->
+  <div class="admin-login-page" id="loginScreen">
+    <div class="admin-login-card">
+      <div class="logo-wrap">
+        <div class="logo-mark"><span>AH</span></div>
+        <h2>Admin Dashboard</h2>
+        <p>Enter your password to access the admin panel.</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="adminPass">Password</label>
+          <input
+            type="password"
+            id="adminPass"
+            class="form-control"
+            placeholder="Enter admin password"
+            autocomplete="current-password"
+          >
+          <span class="form-error" id="loginError"></span>
+        </div>
+        <button type="submit" class="btn btn-primary w-full" id="loginBtn">
+          Sign In
+        </button>
+      </form>
+
+      <!-- Forgot Password -->
+      <div style="text-align:center;margin-top:18px;">
+        <button
+          type="button"
+          id="forgotToggle"
+          onclick="toggleForgotPassword()"
+          style="background:none;border:none;font-size:0.8rem;color:var(--maroon);cursor:pointer;font-family:inherit;font-weight:500;text-decoration:underline;text-underline-offset:2px;"
+        >
+          Forgot Password?
+        </button>
+      </div>
+
+      <!-- Forgot Password Panel -->
+      <div id="forgotPanel" style="display:none;margin-top:20px;border-top:1px solid var(--border-color);padding-top:20px;">
+        <div id="forgotContent">
+          <div style="display:flex;align-items:center;gap:10px;background:rgba(128,0,32,0.06);border:1px solid var(--maroon-border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:18px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--maroon)" style="flex-shrink:0;">
+              <path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+            </svg>
+            <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.55;margin:0;">
+              Your password is stored securely on the server. Click below to send it to the configured admin email address.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            id="sendRecoveryBtn"
+            onclick="sendPasswordRecovery()"
+            class="btn btn-outline w-full"
+            style="justify-content:center;"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            Email Me My Password
+          </button>
+
+          <div id="recoveryMsg" style="display:none;margin-top:14px;text-align:center;font-size:0.8rem;"></div>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:20px;font-size:0.75rem;color:var(--text-muted);">
+        <a href="index.html" style="color:var(--maroon);">← Back to Website</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ─── DASHBOARD ─────────────────────────────────────────────────────────── -->
+  <div class="admin-layout" id="adminLayout">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="nav-brand" style="gap:10px;">
+          <div class="brand-logo-mark"><span>AH</span></div>
+          <div class="brand-text">
+            <span class="brand-name">Al-Hammad</span>
+            <span class="brand-tagline">Admin Panel</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="active" onclick="switchTab('properties', this); return false;">
+          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          Properties
+        </a>
+        <a href="#" onclick="switchTab('add', this); return false;">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+          Add Property
+        </a>
+        <a href="index.html" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+          View Website
+        </a>
+      </nav>
+
+      <div class="sidebar-logout">
+        <button onclick="logout()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+          </svg>
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+
+      <!-- Topbar -->
+      <div class="admin-topbar">
+        <div>
+          <h1 id="panelTitle">Properties</h1>
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;">Manage your property listings</p>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="switchTab('add', document.querySelector('.sidebar-nav a:nth-child(2)'))">
+          + Add New Property
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="admin-stats" id="adminStats">
+        <div class="admin-stat-card">
+          <div class="stat-icon maroon">
+            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          </div>
+          <div>
+            <div class="num" id="statTotal">—</div>
+            <div class="lbl">Total Listings</div>
+          </div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="stat-icon green">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          </div>
+          <div>
+            <div class="num" id="statFeatured">—</div>
+            <div class="lbl">Featured</div>
+          </div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div>
+            <div class="num" id="statSale">—</div>
+            <div class="lbl">For Sale</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Properties List -->
+      <div id="tab-properties" class="tab-panel active">
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h2>All Listings</h2>
+            <span style="font-size:0.78rem;color:var(--text-muted);" id="listingCount">Loading…</span>
+          </div>
+          <div class="admin-panel__body" style="padding:0;overflow-x:auto;">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Status</th>
+                  <th>Price</th>
+                  <th>Location</th>
+                  <th>Featured</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="propertiesTableBody">
+                <tr>
+                  <td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted);">
+                    Loading listings…
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Add Property -->
+      <div id="tab-add" class="tab-panel">
+        <div class="admin-panel">
+          <div class="admin-panel__header">
+            <h2>Add New Property</h2>
+            <span style="font-size:0.78rem;color:var(--text-muted);">All starred fields are required</span>
+          </div>
+          <div class="admin-panel__body">
+            <form id="addPropertyForm" novalidate>
+              <div class="add-form-grid">
+
+                <div class="form-group">
+                  <label class="form-label">Property Title *</label>
+                  <input type="text" name="title" class="form-control" placeholder="e.g. Luxury 4-Bedroom Villa in DHA">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Price *</label>
+                  <input type="text" name="price" class="form-control" placeholder="e.g. PKR 2.50 Crore / PKR 45,000 / month">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Status *</label>
+                  <select name="status" class="form-control">
+                    <option value="">Select status…</option>
+                    <option value="For Sale">For Sale</option>
+                    <option value="For Rent">For Rent</option>
+                    <option value="For Purchase">For Purchase</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Property Type</label>
+                  <select name="type" class="form-control">
+                    <option value="House">House</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="Villa">Villa</option>
+                    <option value="Studio">Studio</option>
+                    <option value="Commercial">Commercial</option>
+                    <option value="Shop">Shop</option>
+                    <option value="Plot">Plot</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Bedrooms</label>
+                  <input type="number" name="bedrooms" class="form-control" placeholder="0" min="0">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Bathrooms</label>
+                  <input type="number" name="bathrooms" class="form-control" placeholder="0" min="0">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Total Area</label>
+                  <input type="text" name="area" class="form-control" placeholder="e.g. 200 sq. yards / 1800 sq. ft.">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Location</label>
+                  <input type="text" name="location" class="form-control" placeholder="e.g. DHA Phase 6, Karachi">
+                </div>
+
+                <div class="form-group full-width">
+                  <label class="form-label">Image URL *</label>
+                  <input type="url" name="image" class="form-control" placeholder="https://images.unsplash.com/…">
+                  <span style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;display:block;">Paste a direct image URL (Unsplash, Google Drive, etc.)</span>
+                </div>
+
+                <div class="form-group full-width">
+                  <label class="form-label">Description</label>
+                  <textarea name="description" class="form-control" rows="4" placeholder="Describe the property — key features, finishes, neighbourhood…"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                  <label class="form-label">Features / Amenities</label>
+                  <input type="text" name="features" class="form-control" placeholder="Swimming Pool, Generator, Servant Quarters, 2-Car Garage (comma-separated)">
+                </div>
+
+                <div class="form-group" style="display:flex;align-items:center;gap:12px;padding-top:4px;">
+                  <input type="checkbox" name="featured" id="featuredCheck" style="width:18px;height:18px;accent-color:var(--maroon);cursor:pointer;">
+                  <label for="featuredCheck" style="font-size:0.85rem;font-weight:500;color:var(--text-primary);cursor:pointer;">
+                    Mark as Featured (shown on Home page)
+                  </label>
+                </div>
+
+              </div>
+
+              <div style="display:flex;gap:12px;margin-top:8px;">
+                <button type="submit" class="btn btn-primary" id="addBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                  </svg>
+                  Add Property
+                </button>
+                <button type="button" class="btn btn-outline" onclick="document.getElementById('addPropertyForm').reset()">
+                  Clear Form
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/components.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

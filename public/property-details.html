@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Details — Al-Hammad Associate</title>
+  <meta name="description" content="View full details, images, and inquire about this premium property listed by Al-Hammad Associate.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div id="site-header"></div>
+
+  <!-- Page Hero / Breadcrumb -->
+  <div class="page-hero" style="padding:48px 0;">
+    <div class="container">
+      <div class="breadcrumb" id="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <a href="properties.html">Properties</a>
+        <span>›</span>
+        <span style="color:#aaa;" id="breadcrumbTitle">Loading…</span>
+      </div>
+      <h1 id="pageTitle" style="font-size:1.6rem;margin-top:8px;">Property Details</h1>
+    </div>
+  </div>
+
+  <!-- ── Property Detail ───────────────────────────────────────────────────── -->
+  <section class="property-detail">
+    <div class="container">
+
+      <!-- Loading State -->
+      <div id="loadingState">
+        <div style="display:grid;grid-template-columns:1fr 380px;gap:48px;">
+          <div>
+            <div class="skeleton" style="aspect-ratio:16/10;width:100%;border-radius:var(--radius-md);margin-bottom:12px;"></div>
+            <div style="display:flex;gap:10px;margin-bottom:32px;">
+              <div class="skeleton" style="width:80px;height:60px;border-radius:var(--radius-sm);"></div>
+              <div class="skeleton" style="width:80px;height:60px;border-radius:var(--radius-sm);"></div>
+              <div class="skeleton" style="width:80px;height:60px;border-radius:var(--radius-sm);"></div>
+            </div>
+            <div class="skeleton skeleton-line" style="width:30%;height:10px;margin-bottom:12px;"></div>
+            <div class="skeleton skeleton-line" style="width:75%;height:24px;margin-bottom:24px;"></div>
+            <div class="skeleton skeleton-line" style="width:90%;margin-bottom:10px;"></div>
+            <div class="skeleton skeleton-line" style="width:85%;margin-bottom:10px;"></div>
+            <div class="skeleton skeleton-line" style="width:70%;"></div>
+          </div>
+          <div>
+            <div class="skeleton" style="height:340px;border-radius:var(--radius-md);"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Property Content -->
+      <div id="propertyContent" class="detail-layout hidden">
+
+        <!-- Left Column -->
+        <div>
+          <!-- Main Gallery Image -->
+          <div class="detail-gallery">
+            <img id="mainImage" src="" alt="Property Image">
+          </div>
+
+          <!-- Thumbnails -->
+          <div class="gallery-thumbs" id="galleryThumbs"></div>
+
+          <!-- Header -->
+          <div class="detail-header">
+            <span class="detail-status property-card__badge" id="detailStatus"></span>
+            <h1 class="detail-title" id="detailTitle"></h1>
+            <div class="detail-location">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span id="detailLocation"></span>
+            </div>
+          </div>
+
+          <!-- Specs -->
+          <div class="detail-specs" id="detailSpecs"></div>
+
+          <!-- Description -->
+          <h3 style="font-size:0.88rem;font-weight:700;color:var(--text-primary);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:14px;">Description</h3>
+          <p class="detail-description" id="detailDescription"></p>
+
+          <!-- Features -->
+          <h3 style="font-size:0.88rem;font-weight:700;color:var(--text-primary);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:16px;">Features & Amenities</h3>
+          <div class="features-grid" id="featuresList"></div>
+        </div>
+
+        <!-- Right Column — Inquiry Sidebar -->
+        <div class="inquiry-sidebar">
+          <div class="inquiry-card">
+            <div class="inquiry-card__header">
+              <div class="inquiry-card__label">Listed Price</div>
+              <div class="inquiry-card__price" id="sidebarPrice"></div>
+            </div>
+            <div class="inquiry-card__body">
+              <div class="inquiry-card__title">
+                Interested in this property? Send us your details and we'll get back to you within the hour.
+              </div>
+
+              <form id="inquiryForm" novalidate>
+                <div class="form-group">
+                  <label class="form-label" for="inquiryName">Full Name *</label>
+                  <input
+                    type="text"
+                    id="inquiryName"
+                    name="name"
+                    class="form-control"
+                    placeholder="e.g. Ahmed Khan"
+                    autocomplete="name"
+                  >
+                  <span class="form-error" id="nameError"></span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="inquiryPhone">Phone Number *</label>
+                  <input
+                    type="tel"
+                    id="inquiryPhone"
+                    name="phone"
+                    class="form-control"
+                    placeholder="e.g. 0310 2206228"
+                    autocomplete="tel"
+                  >
+                  <span class="form-error" id="phoneError"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full" id="inquiryBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                  </svg>
+                  Send Inquiry
+                </button>
+
+                <p style="font-size:0.72rem;color:var(--text-muted);text-align:center;margin-top:14px;line-height:1.6;">
+                  By submitting, you agree to be contacted by Al-Hammad Associate regarding this property.
+                </p>
+              </form>
+            </div>
+          </div>
+
+          <!-- Direct Contact -->
+          <div style="background:var(--white);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:24px;margin-top:16px;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--text-primary);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.06em;">Or Contact Directly</div>
+            <a href="tel:+923102206228" class="btn btn-outline w-full" style="justify-content:center;margin-bottom:10px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+              +92 310 2206228
+            </a>
+            <a href="https://wa.me/923102206228" target="_blank" rel="noopener"
+               class="btn w-full" style="justify-content:center;background:#25D366;color:white;border-color:#25D366;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              Chat on WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Error State -->
+      <div id="errorState" class="hidden" style="text-align:center;padding:80px 0;">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="var(--border-color)" style="margin:0 auto 20px;display:block;">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+        <h3 style="font-size:1.2rem;font-weight:700;color:var(--text-primary);margin-bottom:10px;">Property Not Found</h3>
+        <p style="color:var(--text-muted);margin-bottom:24px;">This listing may have been removed or the URL is invalid.</p>
+        <a href="properties.html" class="btn btn-primary">Browse All Properties</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Related Properties -->
+  <section class="section section-alt" id="relatedSection" style="display:none;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">You May Also Like</span>
+        <h2 class="section-title">Similar Properties</h2>
+        <div class="section-divider"></div>
+      </div>
+      <div class="properties-grid" id="relatedGrid"></div>
+    </div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="js/components.js"></script>
+  <script src="js/property-details.js"></script>
+</body>
+</html>

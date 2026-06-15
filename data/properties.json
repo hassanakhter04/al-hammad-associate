@@ -1,0 +1,128 @@
+{
+  "properties": [
+    {
+      "id": "prop-001",
+      "title": "Luxury 5-Bedroom Villa in DHA Phase 6",
+      "price": "PKR 8.50 Crore",
+      "status": "For Sale",
+      "type": "Villa",
+      "bedrooms": 5,
+      "bathrooms": 6,
+      "area": "600 sq. yards",
+      "location": "DHA Phase 6, Karachi",
+      "description": "A magnificent 5-bedroom villa boasting premium Italian marble finishes, a professionally landscaped garden, and a private swimming pool. This architectural masterpiece sits in a prime gated community in DHA Phase 6, offering an unparalleled lifestyle with state-of-the-art amenities, 24/7 security, and breathtaking views. The property features a double-height entrance lobby, modular kitchen, smart home automation, and dedicated servant quarters.",
+      "features": ["Swimming Pool", "Landscaped Garden", "Servant Quarters", "2-Car Garage", "Smart Home System", "Backup Generator", "Solar Panels", "Central AC"],
+      "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=80"
+      ],
+      "featured": true,
+      "createdAt": "2024-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "prop-002",
+      "title": "Modern 3-Bedroom Apartment in Clifton",
+      "price": "PKR 85,000 / month",
+      "status": "For Rent",
+      "type": "Apartment",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "area": "2,200 sq. ft.",
+      "location": "Clifton Block 5, Karachi",
+      "description": "A sleek, fully furnished 3-bedroom apartment on the 12th floor of a prestigious tower in Clifton. Enjoy panoramic sea views from the wrap-around balcony. The apartment features a modern open-plan kitchen, premium fixtures, and access to a rooftop pool, gymnasium, and concierge services. Ideal for executives and families seeking a premium urban lifestyle.",
+      "features": ["Sea View", "Rooftop Pool", "Fully Furnished", "Gymnasium", "Concierge Service", "Covered Parking", "24/7 Security"],
+      "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1560185127-6a8e2cf0e300?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80"
+      ],
+      "featured": true,
+      "createdAt": "2024-01-20T00:00:00.000Z"
+    },
+    {
+      "id": "prop-003",
+      "title": "Prime Commercial Office Space in I.I. Chundrigar",
+      "price": "PKR 3.20 Crore",
+      "status": "For Purchase",
+      "type": "Commercial",
+      "bedrooms": 0,
+      "bathrooms": 4,
+      "area": "4,500 sq. ft.",
+      "location": "I.I. Chundrigar Road, Karachi",
+      "description": "A premium Grade-A commercial office space located in Karachi's premier business district on I.I. Chundrigar Road. This corporate suite spans the entire 8th floor of a landmark tower, featuring a reception lobby, 6 executive cabins, a boardroom, open-plan workspaces, and server room. Equipped with fiber internet, central air conditioning, and premium finishes throughout.",
+      "features": ["Grade-A Office", "6 Executive Cabins", "Boardroom", "Reception Area", "Server Room", "Central AC", "High-Speed Fiber", "Covered Parking"],
+      "image": "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=80"
+      ],
+      "featured": true,
+      "createdAt": "2024-02-01T00:00:00.000Z"
+    },
+    {
+      "id": "prop-004",
+      "title": "Elegant 4-Bedroom House in North Nazimabad",
+      "price": "PKR 2.80 Crore",
+      "status": "For Sale",
+      "type": "House",
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "area": "240 sq. yards",
+      "location": "Block I, North Nazimabad, Karachi",
+      "description": "A beautifully maintained double-storey house in the heart of North Nazimabad's most sought-after Block I. This spacious home features 4 large bedrooms with attached baths, a formal drawing room, dining room, and a modern kitchen. The covered terrace and private courtyard are perfect for family gatherings. Located minutes from Karachi University and top schools.",
+      "features": ["Drawing Room", "Covered Terrace", "Private Courtyard", "Servant Quarters", "Car Porch", "Water Storage", "UPS Room"],
+      "image": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80"
+      ],
+      "featured": false,
+      "createdAt": "2024-02-10T00:00:00.000Z"
+    },
+    {
+      "id": "prop-005",
+      "title": "Fully Furnished Studio in Gulshan-e-Iqbal",
+      "price": "PKR 35,000 / month",
+      "status": "For Rent",
+      "type": "Studio",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "area": "650 sq. ft.",
+      "location": "Block 13-D, Gulshan-e-Iqbal, Karachi",
+      "description": "A compact and thoughtfully designed fully-furnished studio apartment ideal for young professionals. Features a modular kitchenette, a queen-size bed with built-in wardrobes, a dedicated workspace, and modern bathroom. The building offers 24/7 security, a standby generator, and is conveniently close to offices, eateries, and public transport.",
+      "features": ["Fully Furnished", "24/7 Security", "Generator Backup", "Kitchenette", "High-Speed Internet", "Close to Transport"],
+      "image": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
+      ],
+      "featured": false,
+      "createdAt": "2024-02-15T00:00:00.000Z"
+    },
+    {
+      "id": "prop-006",
+      "title": "Retail Shop Space in Tariq Road",
+      "price": "PKR 1.20 Crore",
+      "status": "For Purchase",
+      "type": "Shop",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "area": "350 sq. ft.",
+      "location": "Tariq Road, Karachi",
+      "description": "A ground-floor commercial retail shop in one of Karachi's busiest shopping corridors — Tariq Road. This high-footfall corner unit benefits from exceptional visibility and walk-in traffic, making it ideal for fashion, accessories, or food brands. Complete with polished tile flooring, display glass frontage, and a mezzanine storage level.",
+      "features": ["Ground Floor", "Corner Unit", "High Footfall", "Glass Frontage", "Mezzanine Level", "Main Road Facing"],
+      "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80",
+      "gallery": [
+        "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80",
+        "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=1200&q=80"
+      ],
+      "featured": false,
+      "createdAt": "2024-03-01T00:00:00.000Z"
+    }
+  ]
+}

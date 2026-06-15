@@ -1,0 +1,13 @@
+# Environment variables (never commit these)
+.env
+
+# Dependencies
+node_modules/
+
+# Inquiry and contact logs (user data, regenerated at runtime)
+data/inquiries.json
+data/contacts.json
+
+# OS files
+.DS_Store
+Thumbs.db
