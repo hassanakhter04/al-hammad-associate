@@ -2,14 +2,36 @@
    Al-Hammad Associate — Property Details Page
    ───────────────────────────────────────────────────────────────────────────── */
 
-let currentProperty = null;
+let currentProperty   = null;
+let galleryImages     = [];
+let currentImageIndex = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
   const id = new URLSearchParams(window.location.search).get('id');
   if (!id) { showError(); return; }
   loadProperty(id);
   initInquiryForm();
+  initGalleryGestures();
 });
+
+/* ── Gallery Gestures (swipe + keyboard) ─────────────────────────────────────── */
+function initGalleryGestures() {
+  const gallery = document.querySelector('.detail-gallery');
+  if (!gallery) return;
+
+  let touchStartX = 0;
+  gallery.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  gallery.addEventListener('touchend', (e) => {
+    const diff = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(diff) > 50) { diff < 0 ? nextImage() : prevImage(); }
+  }, { passive: true });
+
+  document.addEventListener('keydown', (e) => {
+    if (galleryImages.length < 2) return;
+    if (e.key === 'ArrowLeft')  prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+  });
+}
 
 /* ── Load Property ───────────────────────────────────────────────────────────── */
 async function loadProperty(id) {
@@ -44,22 +66,31 @@ function renderProperty(p) {
   document.getElementById('sidebarPrice').textContent      = p.price;
 
   // Gallery
-  const gallery = p.gallery && p.gallery.length ? p.gallery : [p.image];
+  galleryImages = p.gallery && p.gallery.length ? p.gallery : [p.image];
+  currentImageIndex = 0;
+
   const mainImg = document.getElementById('mainImage');
-  mainImg.src = gallery[0];
+  mainImg.src = galleryImages[0];
   mainImg.alt = p.title;
 
   const thumbsEl = document.getElementById('galleryThumbs');
-  if (gallery.length > 1) {
-    thumbsEl.innerHTML = gallery.map((src, i) => `
+  if (galleryImages.length > 1) {
+    thumbsEl.innerHTML = galleryImages.map((src, i) => `
       <img
         class="gallery-thumb ${i === 0 ? 'active' : ''}"
         src="${src}"
         alt="${p.title} image ${i + 1}"
-        onclick="switchImage(this, '${src}')"
+        onclick="showImageAt(${i})"
         loading="lazy"
       >`).join('');
   }
+
+  // Show/hide nav buttons & counter based on number of images
+  const hasMultiple = galleryImages.length > 1;
+  document.getElementById('galleryPrev').style.display    = hasMultiple ? 'flex' : 'none';
+  document.getElementById('galleryNext').style.display    = hasMultiple ? 'flex' : 'none';
+  document.getElementById('galleryCounter').style.display = hasMultiple ? 'block' : 'none';
+  updateGalleryCounter();
 
   // Specs
   const specsEl = document.getElementById('detailSpecs');
@@ -113,14 +144,31 @@ function renderProperty(p) {
   document.getElementById('propertyContent').classList.remove('hidden');
 }
 
-/* ── Gallery Switcher ────────────────────────────────────────────────────────── */
-function switchImage(thumbEl, src) {
-  document.getElementById('mainImage').src = src;
-  document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-  thumbEl.classList.add('active');
+/* ── Gallery Navigation ──────────────────────────────────────────────────────── */
+function updateGalleryCounter() {
+  const counter = document.getElementById('galleryCounter');
+  if (counter) counter.textContent = `${currentImageIndex + 1} / ${galleryImages.length}`;
 }
 
-window.switchImage = switchImage;
+function showImageAt(index) {
+  if (!galleryImages.length) return;
+  currentImageIndex = (index + galleryImages.length) % galleryImages.length;
+  document.getElementById('mainImage').src = galleryImages[currentImageIndex];
+
+  const thumbs = document.querySelectorAll('.gallery-thumb');
+  thumbs.forEach((t, i) => t.classList.toggle('active', i === currentImageIndex));
+  if (thumbs[currentImageIndex]) {
+    thumbs[currentImageIndex].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+  updateGalleryCounter();
+}
+
+function nextImage() { showImageAt(currentImageIndex + 1); }
+function prevImage() { showImageAt(currentImageIndex - 1); }
+
+window.showImageAt = showImageAt;
+window.nextImage   = nextImage;
+window.prevImage   = prevImage;
 
 /* ── Error State ─────────────────────────────────────────────────────────────── */
 function showError() {

@@ -59,11 +59,7 @@
 <nav class="navbar" id="navbar">
   <div class="container">
     <a href="index.html" class="nav-brand">
-      <div class="brand-logo-mark"><span>AH</span></div>
-      <div class="brand-text">
-        <span class="brand-name">Al-Hammad Associate</span>
-        <span class="brand-tagline">Premium Real Estate</span>
-      </div>
+      <img src="images/logo.png" alt="Al-Hammad Associate — Real Estate" class="brand-logo-img">
     </a>
     <div class="nav-links">
       <a href="index.html"           ${isActive('index.html')      ? 'class="active"' : ''}>Home</a>
@@ -90,11 +86,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="nav-brand" style="margin-bottom:0">
-          <div class="brand-logo-mark"><span>AH</span></div>
-          <div class="brand-text">
-            <span class="brand-name">Al-Hammad Associate</span>
-            <span class="brand-tagline">Premium Real Estate</span>
-          </div>
+          <img src="images/logo.png" alt="Al-Hammad Associate — Real Estate" class="brand-logo-img on-dark">
         </a>
         <p>Karachi's trusted real estate partner since decades. We specialize in connecting buyers, sellers, and tenants with premium residential and commercial properties across the city.</p>
       </div>

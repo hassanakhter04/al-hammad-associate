@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" href="images/logo.png">
   <title>Property Details — Al-Hammad Associate</title>
   <meta name="description" content="View full details, images, and inquire about this premium property listed by Al-Hammad Associate.">
   <link rel="stylesheet" href="css/styles.css">
@@ -60,6 +60,9 @@
           <!-- Main Gallery Image -->
           <div class="detail-gallery">
             <img id="mainImage" src="" alt="Property Image">
+            <button type="button" class="gallery-nav prev" id="galleryPrev" onclick="prevImage()" aria-label="Previous image">‹</button>
+            <button type="button" class="gallery-nav next" id="galleryNext" onclick="nextImage()" aria-label="Next image">›</button>
+            <span class="gallery-counter" id="galleryCounter"></span>
           </div>
 
           <!-- Thumbnails -->

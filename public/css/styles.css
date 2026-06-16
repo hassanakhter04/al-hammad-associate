@@ -168,6 +168,20 @@ button, input, select, textarea {
   text-decoration: none;
 }
 
+.brand-logo-img {
+  height: 52px;
+  width: auto;
+  display: block;
+}
+
+/* Logo on dark backgrounds (footer) sits on a white badge so it stays visible */
+.brand-logo-img.on-dark {
+  background: #fff;
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  height: 60px;
+}
+
 .brand-logo-mark {
   width: 42px;
   height: 42px;
@@ -1244,6 +1258,7 @@ textarea.form-control {
 }
 
 .detail-gallery {
+  position: relative;
   border-radius: var(--radius-md);
   overflow: hidden;
   margin-bottom: 28px;
@@ -1257,15 +1272,55 @@ textarea.form-control {
   object-fit: cover;
 }
 
+.gallery-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition);
+  z-index: 2;
+}
+.gallery-nav:hover { background: var(--maroon); }
+.gallery-nav.prev { left: 12px; }
+.gallery-nav.next { right: 12px; }
+
+.gallery-counter {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 99px;
+  z-index: 2;
+}
+
 .gallery-thumbs {
   display: flex;
   gap: 10px;
   margin-bottom: 32px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
 }
 
 .gallery-thumb {
   width: 80px;
   height: 60px;
+  flex: 0 0 auto;
   object-fit: cover;
   border-radius: var(--radius-sm);
   cursor: pointer;
