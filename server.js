@@ -22,7 +22,7 @@ function loginLimiter(req, res, next) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({ origin: ['https://al-hammad-associate.up.railway.app/'] }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
