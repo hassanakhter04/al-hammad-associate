@@ -23,7 +23,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: ['https://al-hammad-associate.up.railway.app', 'http://localhost:3000'] }));
-app.use(express.json({ limit: '12mb' }));
+app.use(express.json({ limit: '25mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const DATA_DIR = path.join(__dirname, 'data');
@@ -118,11 +118,15 @@ app.post('/api/properties', adminAuth, (req, res) => {
   const properties = readProperties();
   const {
     title, price, status, type, bedrooms, bathrooms,
-    area, location, description, features, image, featured
+    area, location, description, features, image, gallery, featured
   } = req.body;
 
-  if (!title || !price || !status || !image) {
-    return res.status(400).json({ error: 'title, price, status, and image are required' });
+  const images = Array.isArray(gallery) && gallery.length
+    ? gallery.slice(0, 15)
+    : (image ? [image] : []);
+
+  if (!title || !price || !status || !images.length) {
+    return res.status(400).json({ error: 'title, price, status, and at least one image are required' });
   }
 
   const newProperty = {
@@ -135,8 +139,8 @@ app.post('/api/properties', adminAuth, (req, res) => {
     location: location || 'Karachi',
     description: description || '',
     features: Array.isArray(features) ? features : (features ? features.split(',').map(f => f.trim()) : []),
-    image,
-    gallery: [image],
+    image: images[0],
+    gallery: images,
     featured: featured === true || featured === 'true',
     createdAt: new Date().toISOString()
   };
@@ -154,8 +158,12 @@ app.put('/api/properties/:id', adminAuth, (req, res) => {
   const existing = properties[index];
   const {
     title, price, status, type, bedrooms, bathrooms,
-    area, location, description, features, image, featured
+    area, location, description, features, image, gallery, featured
   } = req.body;
+
+  const images = Array.isArray(gallery) && gallery.length
+    ? gallery.slice(0, 15)
+    : (image ? [image] : (existing.gallery || [existing.image]));
 
   properties[index] = {
     ...existing,
@@ -169,8 +177,8 @@ app.put('/api/properties/:id', adminAuth, (req, res) => {
     location:    location    || existing.location,
     description: description !== undefined ? description : existing.description,
     features:    Array.isArray(features) ? features : (features ? features.split(',').map(f => f.trim()) : existing.features),
-    image:       image       || existing.image,
-    gallery:     image       ? [image] : existing.gallery,
+    image:       images[0],
+    gallery:     images,
     featured:    featured === true || featured === 'true',
     updatedAt:   new Date().toISOString()
   };

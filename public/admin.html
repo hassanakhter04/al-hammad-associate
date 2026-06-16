@@ -122,17 +122,9 @@
     .dropzone-prompt svg { width: 34px; height: 34px; fill: var(--maroon); opacity: 0.7; }
     .dropzone-prompt strong { color: var(--text-primary); font-weight: 700; }
     .dropzone-prompt span { font-size: 0.72rem; }
-    .dropzone-preview {
-      display: none;
-      width: 100%;
-      max-height: 280px;
-      object-fit: contain;
-      background: #000;
-    }
-    .image-dropzone.has-image .dropzone-prompt { display: none; }
-    .image-dropzone.has-image { border-style: solid; }
+    .image-dropzone { min-height: 130px; }
     .image-dropzone.loading { opacity: 0.55; pointer-events: none; }
-    .dropzone-change-hint {
+    .dropzone-count {
       position: absolute;
       bottom: 8px;
       right: 8px;
@@ -142,9 +134,48 @@
       font-weight: 600;
       padding: 4px 10px;
       border-radius: 99px;
-      display: none;
     }
-    .image-dropzone.has-image .dropzone-change-hint { display: block; }
+    .thumb-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .thumb-grid:empty { margin-top: 0; }
+    .thumb-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    .thumb-item img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb-remove {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 22px; height: 22px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .thumb-remove:hover { background: var(--maroon); }
+    .main-tag {
+      position: absolute;
+      bottom: 4px; left: 4px;
+      background: var(--maroon);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 99px;
+    }
   </style>
 </head>
 <body>
@@ -404,18 +435,18 @@
                 </div>
 
                 <div class="form-group full-width">
-                  <label class="form-label">Property Image *</label>
+                  <label class="form-label">Property Images * (up to 15)</label>
                   <div class="image-dropzone" id="addDropzone">
-                    <input type="file" id="addFileInput" accept="image/*" hidden>
-                    <input type="hidden" name="image" id="addImageData">
-                    <img class="dropzone-preview" id="addPreview" alt="Preview">
+                    <input type="file" id="addFileInput" accept="image/*" multiple hidden>
                     <div class="dropzone-prompt">
                       <svg viewBox="0 0 24 24"><path d="M19 13v6H5v-6H3v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2zM11 7.41V16h2V7.41l3.29 3.3 1.42-1.42L12 3.59 6.29 9.29l1.42 1.42L11 7.41z"/></svg>
                       <strong>Tap to upload</strong> or drag &amp; drop
-                      <span>Take a photo or pick from your phone / computer</span>
+                      <span>Take photos or pick from your phone / computer</span>
                     </div>
-                    <span class="dropzone-change-hint">Tap to change</span>
+                    <span class="dropzone-count" id="addCount">0/15 images</span>
                   </div>
+                  <div class="thumb-grid" id="addThumbs"></div>
+                  <span style="font-size:0.72rem;color:var(--text-muted);margin-top:6px;display:block;">The first image is used as the main photo. Drag to reorder is not supported — remove and re-add to change the main.</span>
                 </div>
 
                 <div class="form-group full-width">
@@ -517,18 +548,17 @@
           </div>
 
           <div class="form-group full-width">
-            <label class="form-label">Property Image *</label>
+            <label class="form-label">Property Images * (up to 15)</label>
             <div class="image-dropzone" id="editDropzone">
-              <input type="file" id="editFileInput" accept="image/*" hidden>
-              <input type="hidden" id="editImage">
-              <img class="dropzone-preview" id="editPreview" alt="Preview">
+              <input type="file" id="editFileInput" accept="image/*" multiple hidden>
               <div class="dropzone-prompt">
                 <svg viewBox="0 0 24 24"><path d="M19 13v6H5v-6H3v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2zM11 7.41V16h2V7.41l3.29 3.3 1.42-1.42L12 3.59 6.29 9.29l1.42 1.42L11 7.41z"/></svg>
                 <strong>Tap to upload</strong> or drag &amp; drop
-                <span>Take a photo or pick from your phone / computer</span>
+                <span>Take photos or pick from your phone / computer</span>
               </div>
-              <span class="dropzone-change-hint">Tap to change</span>
+              <span class="dropzone-count" id="editCount">0/15 images</span>
             </div>
+            <div class="thumb-grid" id="editThumbs"></div>
           </div>
 
           <div class="form-group full-width">

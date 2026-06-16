@@ -231,6 +231,7 @@ function initAddForm() {
     e.preventDefault();
 
     const fd = new FormData(form);
+    const gallery = imagePickers['addDropzone'] ? imagePickers['addDropzone'].getImages() : [];
     const payload = {
       title:       fd.get('title')?.trim(),
       price:       fd.get('price')?.trim(),
@@ -240,14 +241,14 @@ function initAddForm() {
       bathrooms:   fd.get('bathrooms') || 0,
       area:        fd.get('area')?.trim(),
       location:    fd.get('location')?.trim(),
-      image:       fd.get('image')?.trim(),
+      gallery,
       description: fd.get('description')?.trim(),
       features:    fd.get('features')?.trim(),
       featured:    document.getElementById('featuredCheck').checked,
     };
 
     // Validation
-    const required = ['title', 'price', 'status', 'image'];
+    const required = ['title', 'price', 'status'];
     let valid = true;
     required.forEach(k => {
       if (!payload[k]) {
@@ -256,6 +257,12 @@ function initAddForm() {
         if (inp) inp.classList.add('error');
       }
     });
+
+    if (!gallery.length) {
+      valid = false;
+      window.AlHammad.showToast('Please add at least one property image.', 'error');
+      return;
+    }
 
     if (!valid) {
       window.AlHammad.showToast('Please fill in all required fields.', 'error');
@@ -284,7 +291,7 @@ function initAddForm() {
       if (res.ok && data.id) {
         window.AlHammad.showToast(`"${data.title}" added successfully!`, 'success');
         form.reset();
-        resetDropzone('addDropzone', 'addImageData', 'addPreview');
+        if (imagePickers['addDropzone']) imagePickers['addDropzone'].clear();
         document.getElementById('featuredCheck').checked = false;
         form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
         switchTab('properties', document.querySelector('.sidebar-nav a:first-child'));
@@ -337,58 +344,75 @@ function compressImage(file, maxDim = 1200, quality = 0.8) {
   });
 }
 
-function setupImagePicker(zoneId, fileInputId, hiddenId, previewId) {
-  const zone    = document.getElementById(zoneId);
-  const fileEl  = document.getElementById(fileInputId);
-  const hidden  = document.getElementById(hiddenId);
-  const preview = document.getElementById(previewId);
-  if (!zone) return;
+const MAX_IMAGES = 15;
+const imagePickers = {};
 
-  async function handleFile(file) {
-    if (!file) return;
-    if (!file.type.startsWith('image/')) {
-      window.AlHammad.showToast('Please select an image file.', 'error');
-      return;
-    }
+function createImagePicker(zoneId, fileInputId, thumbsId, countId) {
+  const zone   = document.getElementById(zoneId);
+  const fileEl = document.getElementById(fileInputId);
+  const thumbs = document.getElementById(thumbsId);
+  const countEl= document.getElementById(countId);
+  if (!zone) return null;
+
+  let images = [];
+
+  function render() {
+    thumbs.innerHTML = images.map((src, i) => `
+      <div class="thumb-item">
+        <img src="${src}" alt="Image ${i + 1}">
+        ${i === 0 ? '<span class="main-tag">Main</span>' : ''}
+        <button type="button" class="thumb-remove" data-i="${i}" title="Remove">&times;</button>
+      </div>`).join('');
+    thumbs.querySelectorAll('.thumb-remove').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        images.splice(parseInt(btn.dataset.i), 1);
+        render();
+      });
+    });
+    if (countEl) countEl.textContent = `${images.length}/${MAX_IMAGES} images`;
+  }
+
+  async function addFiles(fileList) {
+    const files = Array.from(fileList || []);
+    if (!files.length) return;
     zone.classList.add('loading');
-    try {
-      const dataUrl = await compressImage(file);
-      hidden.value = dataUrl;
-      preview.src = dataUrl;
-      preview.style.display = 'block';
-      zone.classList.add('has-image');
-    } catch {
-      window.AlHammad.showToast('Could not process that image. Try another.', 'error');
-    } finally {
-      zone.classList.remove('loading');
+    for (const file of files) {
+      if (images.length >= MAX_IMAGES) {
+        window.AlHammad.showToast(`Maximum ${MAX_IMAGES} images allowed.`, 'error');
+        break;
+      }
+      if (!file.type.startsWith('image/')) continue;
+      try {
+        images.push(await compressImage(file));
+        render();
+      } catch { /* skip bad image */ }
     }
+    zone.classList.remove('loading');
   }
 
   zone.addEventListener('click', () => fileEl.click());
-  fileEl.addEventListener('change', () => handleFile(fileEl.files[0]));
+  fileEl.addEventListener('change', () => { addFiles(fileEl.files); fileEl.value = ''; });
 
   ['dragover', 'dragenter'].forEach(ev =>
     zone.addEventListener(ev, (e) => { e.preventDefault(); zone.classList.add('dragover'); }));
   ['dragleave', 'drop'].forEach(ev =>
     zone.addEventListener(ev, (e) => { e.preventDefault(); zone.classList.remove('dragover'); }));
-  zone.addEventListener('drop', (e) => {
-    const f = e.dataTransfer.files && e.dataTransfer.files[0];
-    if (f) handleFile(f);
-  });
-}
+  zone.addEventListener('drop', (e) => { if (e.dataTransfer.files) addFiles(e.dataTransfer.files); });
 
-function resetDropzone(zoneId, hiddenId, previewId) {
-  const zone = document.getElementById(zoneId);
-  const hidden = document.getElementById(hiddenId);
-  const preview = document.getElementById(previewId);
-  if (hidden) hidden.value = '';
-  if (preview) { preview.src = ''; preview.style.display = 'none'; }
-  if (zone) zone.classList.remove('has-image');
+  const api = {
+    getImages: () => images.slice(),
+    setImages: (arr) => { images = Array.isArray(arr) ? arr.slice(0, MAX_IMAGES) : []; render(); },
+    clear: () => { images = []; render(); }
+  };
+  imagePickers[zoneId] = api;
+  render();
+  return api;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  setupImagePicker('addDropzone', 'addFileInput', 'addImageData', 'addPreview');
-  setupImagePicker('editDropzone', 'editFileInput', 'editImage', 'editPreview');
+  createImagePicker('addDropzone', 'addFileInput', 'addThumbs', 'addCount');
+  createImagePicker('editDropzone', 'editFileInput', 'editThumbs', 'editCount');
 });
 
 /* ── Edit Property ───────────────────────────────────────────────────────────── */
@@ -407,17 +431,8 @@ function openEditModal(id) {
   document.getElementById('editBathrooms').value    = p.bathrooms || 0;
   document.getElementById('editArea').value         = p.area || '';
   document.getElementById('editLocation').value     = p.location || '';
-  document.getElementById('editImage').value        = p.image || '';
-  const editPreview  = document.getElementById('editPreview');
-  const editDropzone = document.getElementById('editDropzone');
-  if (p.image) {
-    editPreview.src = p.image;
-    editPreview.style.display = 'block';
-    editDropzone.classList.add('has-image');
-  } else {
-    editPreview.style.display = 'none';
-    editDropzone.classList.remove('has-image');
-  }
+  const existingImages = (p.gallery && p.gallery.length) ? p.gallery : (p.image ? [p.image] : []);
+  if (imagePickers['editDropzone']) imagePickers['editDropzone'].setImages(existingImages);
   document.getElementById('editDescription').value  = p.description || '';
   document.getElementById('editFeatures').value     = Array.isArray(p.features) ? p.features.join(', ') : '';
   document.getElementById('editFeatured').checked   = !!p.featured;
@@ -441,6 +456,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const id  = document.getElementById('editId').value;
     const btn = document.getElementById('editSaveBtn');
 
+    const gallery = imagePickers['editDropzone'] ? imagePickers['editDropzone'].getImages() : [];
+    if (!gallery.length) {
+      window.AlHammad.showToast('Please add at least one image.', 'error');
+      return;
+    }
+
     btn.disabled    = true;
     btn.textContent = 'Saving…';
 
@@ -453,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bathrooms:   document.getElementById('editBathrooms').value,
       area:        document.getElementById('editArea').value.trim(),
       location:    document.getElementById('editLocation').value.trim(),
-      image:       document.getElementById('editImage').value.trim(),
+      gallery,
       description: document.getElementById('editDescription').value.trim(),
       features:    document.getElementById('editFeatures').value.trim(),
       featured:    document.getElementById('editFeatured').checked,
