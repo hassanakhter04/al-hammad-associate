@@ -38,7 +38,7 @@
   --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 
   --announce-h:  40px;
-  --nav-h:       76px;
+  --nav-h:       88px;
   --header-h:    calc(var(--announce-h) + var(--nav-h));
 }
 
@@ -169,7 +169,7 @@ button, input, select, textarea {
 }
 
 .brand-logo-img {
-  height: 52px;
+  height: 78px;
   width: auto;
   display: block;
 }
@@ -1943,8 +1943,10 @@ textarea.form-control {
 @media (max-width: 768px) {
   :root {
     --announce-h: 36px;
-    --nav-h: 64px;
+    --nav-h: 72px;
   }
+
+  .brand-logo-img { height: 60px; }
 
   /* ── Announcement bar — mobile ───────────────────────────────────────────── */
   .announcement-bar {
