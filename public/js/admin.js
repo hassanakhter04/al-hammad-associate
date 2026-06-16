@@ -101,7 +101,7 @@ async function sendPasswordRecovery() {
     msg.style.display = 'block';
 
     if (res.ok && data.success) {
-      msg.innerHTML = `<span style="color:#16a34a;">✓ Password sent to your WhatsApp.</span>`;
+      msg.innerHTML = `<span style="color:#16a34a;">✓ Recovery email sent, please check inbox.</span>`;
       btn.style.display = 'none';
     } else {
       msg.innerHTML = `<span style="color:#dc2626;">${data.error || 'Failed to send. Check that email is configured in .env'}</span>`;
@@ -135,6 +135,7 @@ async function loadProperties() {
     const res  = await fetch('/api/properties');
     if (!res.ok) throw new Error();
     const list = await res.json();
+    propertiesCache = list;
     renderTable(list);
     updateStats(list);
   } catch {
@@ -185,7 +186,9 @@ function renderTable(list) {
              </span>`
           : '<span style="font-size:0.75rem;color:var(--text-muted);">—</span>'}
       </td>
-      <td>
+      <td style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+        <a href="property-details.html?id=${p.id}" target="_blank" class="btn btn-outline btn-sm" style="font-size:0.72rem;padding:4px 10px;text-decoration:none;">View</a>
+        <button class="btn btn-outline btn-sm" style="font-size:0.72rem;padding:4px 10px;" onclick="openEditModal('${p.id}')">Edit</button>
         <button class="delete-btn" onclick="deleteProperty('${p.id}', this)">Delete</button>
       </td>
     </tr>`).join('');
@@ -303,3 +306,85 @@ function initAddForm() {
     el.addEventListener('input', () => el.classList.remove('error'));
   });
 }
+
+/* ── Edit Property ───────────────────────────────────────────────────────────── */
+let propertiesCache = [];
+
+function openEditModal(id) {
+  const p = propertiesCache.find(p => p.id === id);
+  if (!p) return;
+
+  document.getElementById('editId').value           = p.id;
+  document.getElementById('editTitle').value        = p.title || '';
+  document.getElementById('editPrice').value        = p.price || '';
+  document.getElementById('editStatus').value       = p.status || 'For Sale';
+  document.getElementById('editType').value         = p.type || 'House';
+  document.getElementById('editBedrooms').value     = p.bedrooms || 0;
+  document.getElementById('editBathrooms').value    = p.bathrooms || 0;
+  document.getElementById('editArea').value         = p.area || '';
+  document.getElementById('editLocation').value     = p.location || '';
+  document.getElementById('editImage').value        = p.image || '';
+  document.getElementById('editDescription').value  = p.description || '';
+  document.getElementById('editFeatures').value     = Array.isArray(p.features) ? p.features.join(', ') : '';
+  document.getElementById('editFeatured').checked   = !!p.featured;
+
+  document.getElementById('editModalBackdrop').classList.add('open');
+}
+window.openEditModal = openEditModal;
+
+function closeEditModal(e) {
+  if (e && e.target !== document.getElementById('editModalBackdrop')) return;
+  document.getElementById('editModalBackdrop').classList.remove('open');
+}
+window.closeEditModal = closeEditModal;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('editPropertyForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id  = document.getElementById('editId').value;
+    const btn = document.getElementById('editSaveBtn');
+
+    btn.disabled    = true;
+    btn.textContent = 'Saving…';
+
+    const payload = {
+      title:       document.getElementById('editTitle').value.trim(),
+      price:       document.getElementById('editPrice').value.trim(),
+      status:      document.getElementById('editStatus').value,
+      type:        document.getElementById('editType').value,
+      bedrooms:    document.getElementById('editBedrooms').value,
+      bathrooms:   document.getElementById('editBathrooms').value,
+      area:        document.getElementById('editArea').value.trim(),
+      location:    document.getElementById('editLocation').value.trim(),
+      image:       document.getElementById('editImage').value.trim(),
+      description: document.getElementById('editDescription').value.trim(),
+      features:    document.getElementById('editFeatures').value.trim(),
+      featured:    document.getElementById('editFeatured').checked,
+    };
+
+    try {
+      const res  = await fetch(`/api/properties/${id}`, {
+        method:  'PUT',
+        headers: { 'Content-Type': 'application/json', 'x-admin-token': adminToken },
+        body:    JSON.stringify(payload),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.id) {
+        window.AlHammad.showToast('Property updated successfully.', 'success');
+        document.getElementById('editModalBackdrop').classList.remove('open');
+        loadProperties();
+      } else {
+        throw new Error(data.error || 'Update failed');
+      }
+    } catch (err) {
+      window.AlHammad.showToast(err.message || 'Failed to update property.', 'error');
+    } finally {
+      btn.disabled    = false;
+      btn.textContent = 'Save Changes';
+    }
+  });
+});

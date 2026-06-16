@@ -79,19 +79,15 @@ async function sendWhatsApp(message) {
 }
 
 async function sendEmail(subject, text) {
-  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    throw new Error('Email credentials not configured');
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error('RESEND_API_KEY not configured');
   }
-  const nodemailer = require('nodemailer');
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
-  });
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: process.env.ADMIN_EMAIL || '1999saad.khan@gmail.com',
+  const { Resend } = require('resend');
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const to = process.env.ADMIN_EMAIL || 'hassanakhter2007@gmail.com';
+  await resend.emails.send({
+    from: 'Al-Hammad Associate <onboarding@resend.dev>',
+    to,
     subject,
     text
   });
@@ -150,6 +146,39 @@ app.post('/api/properties', adminAuth, (req, res) => {
   res.status(201).json(newProperty);
 });
 
+app.put('/api/properties/:id', adminAuth, (req, res) => {
+  const properties = readProperties();
+  const index = properties.findIndex(p => p.id === req.params.id);
+  if (index === -1) return res.status(404).json({ error: 'Property not found' });
+
+  const existing = properties[index];
+  const {
+    title, price, status, type, bedrooms, bathrooms,
+    area, location, description, features, image, featured
+  } = req.body;
+
+  properties[index] = {
+    ...existing,
+    title:       title       || existing.title,
+    price:       price       || existing.price,
+    status:      status      || existing.status,
+    type:        type        || existing.type,
+    bedrooms:    parseInt(bedrooms)  ?? existing.bedrooms,
+    bathrooms:   parseInt(bathrooms) ?? existing.bathrooms,
+    area:        area        || existing.area,
+    location:    location    || existing.location,
+    description: description !== undefined ? description : existing.description,
+    features:    Array.isArray(features) ? features : (features ? features.split(',').map(f => f.trim()) : existing.features),
+    image:       image       || existing.image,
+    gallery:     image       ? [image] : existing.gallery,
+    featured:    featured === true || featured === 'true',
+    updatedAt:   new Date().toISOString()
+  };
+
+  saveProperties(properties);
+  res.json(properties[index]);
+});
+
 app.delete('/api/properties/:id', adminAuth, (req, res) => {
   const properties = readProperties();
   const index = properties.findIndex(p => p.id === req.params.id);
@@ -175,16 +204,15 @@ app.post('/api/admin/login', loginLimiter, (req, res) => {
 
 app.post('/api/admin/forgot-password', async (req, res) => {
   try {
-    await sendWhatsApp(
-      `🔐 *Al-Hammad Associate — Password Recovery*\n\nYour admin password is:\n\n   ${ADMIN_PASSWORD}\n\nKeep this message private.`
+    await sendEmail(
+      'Admin Password Recovery — Al-Hammad Associate',
+      `Your admin password is:\n\n   ${ADMIN_PASSWORD}\n\nKeep this email private.\n\n— Al-Hammad Associate`
     );
-    console.log('[FORGOT-PASSWORD] Password sent via WhatsApp');
-    res.json({ success: true, message: 'Password sent to your WhatsApp. Please check your messages.' });
+    console.log('[FORGOT-PASSWORD] Recovery email sent');
+    res.json({ success: true, message: 'Recovery email sent, please check inbox.' });
   } catch (err) {
-    console.error('[FORGOT-PASSWORD] WhatsApp failed:', err.message);
-    res.status(500).json({
-      error: 'Failed to send WhatsApp message. Please check your Twilio credentials.'
-    });
+    console.error('[FORGOT-PASSWORD] Email failed:', err.message);
+    res.status(500).json({ error: 'Failed to send email. Check RESEND_API_KEY in Railway variables.' });
   }
 });
 
@@ -197,27 +225,18 @@ app.post('/api/inquiry', async (req, res) => {
     return res.status(400).json({ error: 'Name, phone, and property title are required' });
   }
 
-  const alertMessage = `🏠 *New Lead Alert — Al-Hammad Associate*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n🏡 *Inquiring About:* ${propertyTitle}\n\n_Reply to this message to connect with the client._`;
-
   let notifiedVia = null;
 
   try {
-    await sendWhatsApp(alertMessage);
-    notifiedVia = 'whatsapp';
-    console.log(`[INQUIRY] WhatsApp sent for ${name} re: ${propertyTitle}`);
-  } catch (waErr) {
-    console.warn('[INQUIRY] WhatsApp failed:', waErr.message);
-    try {
-      await sendEmail(
-        `New Lead: ${name} — ${propertyTitle}`,
-        `New Lead Alert!\n\nName: ${name}\nPhone: ${phone}\nProperty: ${propertyTitle}\nProperty ID: ${propertyId || 'N/A'}\n\nTime: ${new Date().toLocaleString()}`
-      );
-      notifiedVia = 'email';
-      console.log(`[INQUIRY] Email fallback sent for ${name}`);
-    } catch (emailErr) {
-      console.error('[INQUIRY] Email fallback also failed:', emailErr.message);
-      notifiedVia = 'log-only';
-    }
+    await sendEmail(
+      `New Inquiry: ${name} — ${propertyTitle}`,
+      `New Lead Alert!\n\nName: ${name}\nPhone: ${phone}\nProperty: ${propertyTitle}\nProperty ID: ${propertyId || 'N/A'}\n\nTime: ${new Date().toLocaleString()}`
+    );
+    notifiedVia = 'email';
+    console.log(`[INQUIRY] Email sent for ${name} re: ${propertyTitle}`);
+  } catch (err) {
+    console.error('[INQUIRY] Email failed:', err.message);
+    notifiedVia = 'log-only';
   }
 
   appendToLog(INQUIRIES_FILE, { name, phone, propertyId, propertyTitle, notifiedVia });
@@ -240,11 +259,12 @@ app.post('/api/contact', async (req, res) => {
   appendToLog(CONTACTS_FILE, { name, email, phone, message });
 
   try {
-    await sendWhatsApp(
-      `📋 *New Contact Form — Al-Hammad Associate*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n📧 *Email:* ${email || 'N/A'}\n💬 *Message:* ${message || 'N/A'}\n\n🕐 ${new Date().toLocaleString()}`
+    await sendEmail(
+      `Contact Form — ${name}`,
+      `New Contact Form Submission\n\nName: ${name}\nEmail: ${email || 'N/A'}\nPhone: ${phone}\nMessage: ${message || 'N/A'}\n\nTime: ${new Date().toLocaleString()}`
     );
   } catch (err) {
-    console.warn('[CONTACT] WhatsApp notification failed:', err.message);
+    console.warn('[CONTACT] Email notification failed:', err.message);
   }
 
   res.json({

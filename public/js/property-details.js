@@ -96,14 +96,16 @@ function renderProperty(p) {
 
   // Features
   const featuresEl = document.getElementById('featuresList');
+  const featuresSection = document.getElementById('featuresSection');
   if (p.features && p.features.length) {
     featuresEl.innerHTML = p.features.map(f => `
       <div class="feature-tag">
         <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
         ${f}
       </div>`).join('');
+    if (featuresSection) featuresSection.style.display = '';
   } else {
-    featuresEl.closest('section')?.remove();
+    if (featuresSection) featuresSection.style.display = 'none';
   }
 
   // Show content

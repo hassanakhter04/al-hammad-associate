@@ -65,6 +65,29 @@
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Edit Modal */
+    .edit-modal-backdrop {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .edit-modal-backdrop.open { display: flex; }
+    .edit-modal {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 32px;
+    }
+    .edit-modal h2 { font-size: 1.1rem; margin-bottom: 24px; }
+    .edit-modal-footer { display: flex; gap: 12px; margin-top: 24px; }
   </style>
 </head>
 <body>
@@ -365,6 +388,97 @@
       </div>
 
     </main>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="edit-modal-backdrop" id="editModalBackdrop" onclick="closeEditModal(event)">
+    <div class="edit-modal">
+      <h2>Edit Property</h2>
+      <form id="editPropertyForm" novalidate>
+        <input type="hidden" id="editId">
+        <div class="add-form-grid">
+
+          <div class="form-group">
+            <label class="form-label">Property Title *</label>
+            <input type="text" id="editTitle" class="form-control" placeholder="e.g. Luxury 4-Bedroom Villa in DHA">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Price *</label>
+            <input type="text" id="editPrice" class="form-control" placeholder="e.g. PKR 2.50 Crore">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Status *</label>
+            <select id="editStatus" class="form-control">
+              <option value="For Sale">For Sale</option>
+              <option value="For Rent">For Rent</option>
+              <option value="For Purchase">For Purchase</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Property Type</label>
+            <select id="editType" class="form-control">
+              <option value="House">House</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Villa">Villa</option>
+              <option value="Studio">Studio</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Shop">Shop</option>
+              <option value="Plot">Plot</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Bedrooms</label>
+            <input type="number" id="editBedrooms" class="form-control" min="0">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Bathrooms</label>
+            <input type="number" id="editBathrooms" class="form-control" min="0">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Total Area</label>
+            <input type="text" id="editArea" class="form-control" placeholder="e.g. 200 sq. yards">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Location</label>
+            <input type="text" id="editLocation" class="form-control" placeholder="e.g. DHA Phase 6, Karachi">
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label">Image URL *</label>
+            <input type="url" id="editImage" class="form-control" placeholder="https://…">
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label">Description</label>
+            <textarea id="editDescription" class="form-control" rows="4"></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label">Features / Amenities</label>
+            <input type="text" id="editFeatures" class="form-control" placeholder="Swimming Pool, Generator (comma-separated)">
+          </div>
+
+          <div class="form-group" style="display:flex;align-items:center;gap:12px;padding-top:4px;">
+            <input type="checkbox" id="editFeatured" style="width:18px;height:18px;accent-color:var(--maroon);cursor:pointer;">
+            <label for="editFeatured" style="font-size:0.85rem;font-weight:500;color:var(--text-primary);cursor:pointer;">
+              Mark as Featured
+            </label>
+          </div>
+
+        </div>
+        <div class="edit-modal-footer">
+          <button type="submit" class="btn btn-primary" id="editSaveBtn">Save Changes</button>
+          <button type="button" class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <script src="js/components.js"></script>

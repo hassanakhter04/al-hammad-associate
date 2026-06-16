@@ -249,6 +249,7 @@
           <div class="property-card__img-wrap">
             <img src="${property.image}" alt="${property.title}" loading="lazy">
             <span class="property-card__badge ${badgeClass}">${property.status}</span>
+            ${property.featured ? `<span class="featured-ribbon"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> Featured</span>` : ''}
           </div>
           <div class="property-card__body">
             <div class="property-card__location">

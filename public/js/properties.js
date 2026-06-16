@@ -47,9 +47,11 @@ function renderFiltered() {
   const grid = document.getElementById('propertiesGrid');
   const meta = document.getElementById('resultsMeta');
 
-  const filtered = activeFilter === 'All'
+  const filtered = (activeFilter === 'All'
     ? allProperties
-    : allProperties.filter(p => p.status === activeFilter);
+    : allProperties.filter(p => p.status === activeFilter))
+    .slice()
+    .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
 
   if (meta) {
     const label = activeFilter === 'All' ? 'All Properties' : activeFilter;

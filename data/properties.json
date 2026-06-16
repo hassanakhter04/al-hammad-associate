@@ -11,7 +11,16 @@
       "area": "600 sq. yards",
       "location": "DHA Phase 6, Karachi",
       "description": "A magnificent 5-bedroom villa boasting premium Italian marble finishes, a professionally landscaped garden, and a private swimming pool. This architectural masterpiece sits in a prime gated community in DHA Phase 6, offering an unparalleled lifestyle with state-of-the-art amenities, 24/7 security, and breathtaking views. The property features a double-height entrance lobby, modular kitchen, smart home automation, and dedicated servant quarters.",
-      "features": ["Swimming Pool", "Landscaped Garden", "Servant Quarters", "2-Car Garage", "Smart Home System", "Backup Generator", "Solar Panels", "Central AC"],
+      "features": [
+        "Swimming Pool",
+        "Landscaped Garden",
+        "Servant Quarters",
+        "2-Car Garage",
+        "Smart Home System",
+        "Backup Generator",
+        "Solar Panels",
+        "Central AC"
+      ],
       "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
       "gallery": [
         "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
@@ -32,7 +41,15 @@
       "area": "2,200 sq. ft.",
       "location": "Clifton Block 5, Karachi",
       "description": "A sleek, fully furnished 3-bedroom apartment on the 12th floor of a prestigious tower in Clifton. Enjoy panoramic sea views from the wrap-around balcony. The apartment features a modern open-plan kitchen, premium fixtures, and access to a rooftop pool, gymnasium, and concierge services. Ideal for executives and families seeking a premium urban lifestyle.",
-      "features": ["Sea View", "Rooftop Pool", "Fully Furnished", "Gymnasium", "Concierge Service", "Covered Parking", "24/7 Security"],
+      "features": [
+        "Sea View",
+        "Rooftop Pool",
+        "Fully Furnished",
+        "Gymnasium",
+        "Concierge Service",
+        "Covered Parking",
+        "24/7 Security"
+      ],
       "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
       "gallery": [
         "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80",
@@ -53,7 +70,16 @@
       "area": "4,500 sq. ft.",
       "location": "I.I. Chundrigar Road, Karachi",
       "description": "A premium Grade-A commercial office space located in Karachi's premier business district on I.I. Chundrigar Road. This corporate suite spans the entire 8th floor of a landmark tower, featuring a reception lobby, 6 executive cabins, a boardroom, open-plan workspaces, and server room. Equipped with fiber internet, central air conditioning, and premium finishes throughout.",
-      "features": ["Grade-A Office", "6 Executive Cabins", "Boardroom", "Reception Area", "Server Room", "Central AC", "High-Speed Fiber", "Covered Parking"],
+      "features": [
+        "Grade-A Office",
+        "6 Executive Cabins",
+        "Boardroom",
+        "Reception Area",
+        "Server Room",
+        "Central AC",
+        "High-Speed Fiber",
+        "Covered Parking"
+      ],
       "image": "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=800&q=80",
       "gallery": [
         "https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1200&q=80",
@@ -74,7 +100,15 @@
       "area": "240 sq. yards",
       "location": "Block I, North Nazimabad, Karachi",
       "description": "A beautifully maintained double-storey house in the heart of North Nazimabad's most sought-after Block I. This spacious home features 4 large bedrooms with attached baths, a formal drawing room, dining room, and a modern kitchen. The covered terrace and private courtyard are perfect for family gatherings. Located minutes from Karachi University and top schools.",
-      "features": ["Drawing Room", "Covered Terrace", "Private Courtyard", "Servant Quarters", "Car Porch", "Water Storage", "UPS Room"],
+      "features": [
+        "Drawing Room",
+        "Covered Terrace",
+        "Private Courtyard",
+        "Servant Quarters",
+        "Car Porch",
+        "Water Storage",
+        "UPS Room"
+      ],
       "image": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80",
       "gallery": [
         "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80",
@@ -95,7 +129,14 @@
       "area": "650 sq. ft.",
       "location": "Block 13-D, Gulshan-e-Iqbal, Karachi",
       "description": "A compact and thoughtfully designed fully-furnished studio apartment ideal for young professionals. Features a modular kitchenette, a queen-size bed with built-in wardrobes, a dedicated workspace, and modern bathroom. The building offers 24/7 security, a standby generator, and is conveniently close to offices, eateries, and public transport.",
-      "features": ["Fully Furnished", "24/7 Security", "Generator Backup", "Kitchenette", "High-Speed Internet", "Close to Transport"],
+      "features": [
+        "Fully Furnished",
+        "24/7 Security",
+        "Generator Backup",
+        "Kitchenette",
+        "High-Speed Internet",
+        "Close to Transport"
+      ],
       "image": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
       "gallery": [
         "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
@@ -115,7 +156,14 @@
       "area": "350 sq. ft.",
       "location": "Tariq Road, Karachi",
       "description": "A ground-floor commercial retail shop in one of Karachi's busiest shopping corridors — Tariq Road. This high-footfall corner unit benefits from exceptional visibility and walk-in traffic, making it ideal for fashion, accessories, or food brands. Complete with polished tile flooring, display glass frontage, and a mezzanine storage level.",
-      "features": ["Ground Floor", "Corner Unit", "High Footfall", "Glass Frontage", "Mezzanine Level", "Main Road Facing"],
+      "features": [
+        "Ground Floor",
+        "Corner Unit",
+        "High Footfall",
+        "Glass Frontage",
+        "Mezzanine Level",
+        "Main Road Facing"
+      ],
       "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80",
       "gallery": [
         "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80",
@@ -123,6 +171,25 @@
       ],
       "featured": false,
       "createdAt": "2024-03-01T00:00:00.000Z"
+    },
+    {
+      "id": "prop-1781594791455",
+      "title": "house b-158",
+      "price": "1.5 crore",
+      "status": "For Rent",
+      "type": "Apartment",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "area": "200 sq. yard",
+      "location": "block i, North Nazimabad, Karachi",
+      "description": "",
+      "features": [],
+      "image": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "gallery": [
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      ],
+      "featured": true,
+      "createdAt": "2026-06-16T07:26:31.455Z"
     }
   ]
 }
