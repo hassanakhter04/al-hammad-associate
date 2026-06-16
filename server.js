@@ -84,7 +84,9 @@ async function sendEmail(subject, text) {
   }
   const nodemailer = require('nodemailer');
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS }
   });
   await transporter.sendMail({
@@ -247,12 +249,11 @@ app.post('/api/contact', async (req, res) => {
   appendToLog(CONTACTS_FILE, { name, email, phone, message });
 
   try {
-    await sendEmail(
-      `Contact Form — ${name}`,
-      `New Contact Form Submission\n\nName: ${name}\nEmail: ${email || 'N/A'}\nPhone: ${phone}\nMessage: ${message || 'N/A'}\n\nTime: ${new Date().toLocaleString()}`
+    await sendWhatsApp(
+      `📋 *New Contact Form — Al-Hammad Associate*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n📧 *Email:* ${email || 'N/A'}\n💬 *Message:* ${message || 'N/A'}\n\n🕐 ${new Date().toLocaleString()}`
     );
   } catch (err) {
-    console.warn('[CONTACT] Email notification failed:', err.message);
+    console.warn('[CONTACT] WhatsApp notification failed:', err.message);
   }
 
   res.json({
