@@ -186,7 +186,7 @@ app.post('/api/admin/forgot-password', async (req, res) => {
       `Hello,\n\nYou requested a password recovery for the Al-Hammad Associate admin dashboard.\n\nYour admin password is:\n\n   ${ADMIN_PASSWORD}\n\nYou can log in at: http://localhost:${process.env.PORT || 3000}/admin.html\n\nIf you did not request this, please ignore this email.\n\n— Al-Hammad Associate System`
     );
     console.log(`[FORGOT-PASSWORD] Recovery email sent to ${adminEmail}`);
-    res.json({ success: true, message: `Recovery email sent to ${adminEmail}. Check your inbox.` });
+    res.json({ success: true, message: 'Recovery email sent, please check inbox.' });
   } catch (err) {
     console.error('[FORGOT-PASSWORD] Email failed:', err.message);
     res.status(500).json({
