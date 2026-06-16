@@ -32,7 +32,7 @@
     <div class="ann-left">
       <span class="ann-item">
         ${icons.location}
-        C 177, Block I North Nazimabad, Karachi
+        North Nazimabad, Karachi, Pakistan
       </span>
       <span class="ann-sep">|</span>
       <span class="ann-item">
@@ -41,9 +41,9 @@
       </span>
     </div>
     <div class="ann-right">
-      <a href="tel:+923102206228" class="ann-item">
+      <a href="tel:+923248321039" class="ann-item">
         ${icons.phone}
-        +92 310 2206228
+        +92 3248321039
       </a>
       <span class="ann-sep">|</span>
       <a href="https://facebook.com" target="_blank" rel="noopener" class="ann-item">
@@ -118,12 +118,16 @@
       <div>
         <div class="footer-heading">Contact Us</div>
         <div class="footer-contact-item">
+          ${icons.phone}
+          <span style="font-weight:600;color:var(--white);">Hassan Khan</span>
+        </div>
+        <div class="footer-contact-item">
           ${icons.location}
-          <span>C 177, Block I North Nazimabad Town, Karachi, Pakistan</span>
+          <span>North Nazimabad, Karachi, Pakistan</span>
         </div>
         <div class="footer-contact-item">
           ${icons.phone}
-          <a href="tel:+923102206228">+92 310 2206228</a>
+          <a href="tel:+923248321039">+92 3248321039</a>
         </div>
         <div class="footer-contact-item">
           ${icons.clock}
