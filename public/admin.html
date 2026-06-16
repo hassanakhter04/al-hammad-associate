@@ -88,6 +88,63 @@
     }
     .edit-modal h2 { font-size: 1.1rem; margin-bottom: 24px; }
     .edit-modal-footer { display: flex; gap: 12px; margin-top: 24px; }
+
+    /* Image Dropzone */
+    .image-dropzone {
+      position: relative;
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      background: var(--light-gray);
+      min-height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      overflow: hidden;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .image-dropzone:hover { border-color: var(--maroon); }
+    .image-dropzone.dragover {
+      border-color: var(--maroon);
+      background: rgba(128,0,32,0.06);
+    }
+    .dropzone-prompt {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 24px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      pointer-events: none;
+    }
+    .dropzone-prompt svg { width: 34px; height: 34px; fill: var(--maroon); opacity: 0.7; }
+    .dropzone-prompt strong { color: var(--text-primary); font-weight: 700; }
+    .dropzone-prompt span { font-size: 0.72rem; }
+    .dropzone-preview {
+      display: none;
+      width: 100%;
+      max-height: 280px;
+      object-fit: contain;
+      background: #000;
+    }
+    .image-dropzone.has-image .dropzone-prompt { display: none; }
+    .image-dropzone.has-image { border-style: solid; }
+    .image-dropzone.loading { opacity: 0.55; pointer-events: none; }
+    .dropzone-change-hint {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 99px;
+      display: none;
+    }
+    .image-dropzone.has-image .dropzone-change-hint { display: block; }
   </style>
 </head>
 <body>
@@ -347,9 +404,18 @@
                 </div>
 
                 <div class="form-group full-width">
-                  <label class="form-label">Image URL *</label>
-                  <input type="url" name="image" class="form-control" placeholder="https://images.unsplash.com/…">
-                  <span style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;display:block;">Paste a direct image URL (Unsplash, Google Drive, etc.)</span>
+                  <label class="form-label">Property Image *</label>
+                  <div class="image-dropzone" id="addDropzone">
+                    <input type="file" id="addFileInput" accept="image/*" hidden>
+                    <input type="hidden" name="image" id="addImageData">
+                    <img class="dropzone-preview" id="addPreview" alt="Preview">
+                    <div class="dropzone-prompt">
+                      <svg viewBox="0 0 24 24"><path d="M19 13v6H5v-6H3v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2zM11 7.41V16h2V7.41l3.29 3.3 1.42-1.42L12 3.59 6.29 9.29l1.42 1.42L11 7.41z"/></svg>
+                      <strong>Tap to upload</strong> or drag &amp; drop
+                      <span>Take a photo or pick from your phone / computer</span>
+                    </div>
+                    <span class="dropzone-change-hint">Tap to change</span>
+                  </div>
                 </div>
 
                 <div class="form-group full-width">
@@ -451,8 +517,18 @@
           </div>
 
           <div class="form-group full-width">
-            <label class="form-label">Image URL *</label>
-            <input type="url" id="editImage" class="form-control" placeholder="https://…">
+            <label class="form-label">Property Image *</label>
+            <div class="image-dropzone" id="editDropzone">
+              <input type="file" id="editFileInput" accept="image/*" hidden>
+              <input type="hidden" id="editImage">
+              <img class="dropzone-preview" id="editPreview" alt="Preview">
+              <div class="dropzone-prompt">
+                <svg viewBox="0 0 24 24"><path d="M19 13v6H5v-6H3v6c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2zM11 7.41V16h2V7.41l3.29 3.3 1.42-1.42L12 3.59 6.29 9.29l1.42 1.42L11 7.41z"/></svg>
+                <strong>Tap to upload</strong> or drag &amp; drop
+                <span>Take a photo or pick from your phone / computer</span>
+              </div>
+              <span class="dropzone-change-hint">Tap to change</span>
+            </div>
           </div>
 
           <div class="form-group full-width">

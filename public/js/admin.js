@@ -284,6 +284,7 @@ function initAddForm() {
       if (res.ok && data.id) {
         window.AlHammad.showToast(`"${data.title}" added successfully!`, 'success');
         form.reset();
+        resetDropzone('addDropzone', 'addImageData', 'addPreview');
         document.getElementById('featuredCheck').checked = false;
         form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
         switchTab('properties', document.querySelector('.sidebar-nav a:first-child'));
@@ -307,6 +308,89 @@ function initAddForm() {
   });
 }
 
+/* ── Image Upload (drag & drop / file picker) ────────────────────────────────── */
+function compressImage(file, maxDim = 1200, quality = 0.8) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > height && width > maxDim) {
+          height = Math.round(height * maxDim / width);
+          width = maxDim;
+        } else if (height >= width && height > maxDim) {
+          width = Math.round(width * maxDim / height);
+          height = maxDim;
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function setupImagePicker(zoneId, fileInputId, hiddenId, previewId) {
+  const zone    = document.getElementById(zoneId);
+  const fileEl  = document.getElementById(fileInputId);
+  const hidden  = document.getElementById(hiddenId);
+  const preview = document.getElementById(previewId);
+  if (!zone) return;
+
+  async function handleFile(file) {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      window.AlHammad.showToast('Please select an image file.', 'error');
+      return;
+    }
+    zone.classList.add('loading');
+    try {
+      const dataUrl = await compressImage(file);
+      hidden.value = dataUrl;
+      preview.src = dataUrl;
+      preview.style.display = 'block';
+      zone.classList.add('has-image');
+    } catch {
+      window.AlHammad.showToast('Could not process that image. Try another.', 'error');
+    } finally {
+      zone.classList.remove('loading');
+    }
+  }
+
+  zone.addEventListener('click', () => fileEl.click());
+  fileEl.addEventListener('change', () => handleFile(fileEl.files[0]));
+
+  ['dragover', 'dragenter'].forEach(ev =>
+    zone.addEventListener(ev, (e) => { e.preventDefault(); zone.classList.add('dragover'); }));
+  ['dragleave', 'drop'].forEach(ev =>
+    zone.addEventListener(ev, (e) => { e.preventDefault(); zone.classList.remove('dragover'); }));
+  zone.addEventListener('drop', (e) => {
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) handleFile(f);
+  });
+}
+
+function resetDropzone(zoneId, hiddenId, previewId) {
+  const zone = document.getElementById(zoneId);
+  const hidden = document.getElementById(hiddenId);
+  const preview = document.getElementById(previewId);
+  if (hidden) hidden.value = '';
+  if (preview) { preview.src = ''; preview.style.display = 'none'; }
+  if (zone) zone.classList.remove('has-image');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setupImagePicker('addDropzone', 'addFileInput', 'addImageData', 'addPreview');
+  setupImagePicker('editDropzone', 'editFileInput', 'editImage', 'editPreview');
+});
+
 /* ── Edit Property ───────────────────────────────────────────────────────────── */
 let propertiesCache = [];
 
@@ -324,6 +408,16 @@ function openEditModal(id) {
   document.getElementById('editArea').value         = p.area || '';
   document.getElementById('editLocation').value     = p.location || '';
   document.getElementById('editImage').value        = p.image || '';
+  const editPreview  = document.getElementById('editPreview');
+  const editDropzone = document.getElementById('editDropzone');
+  if (p.image) {
+    editPreview.src = p.image;
+    editPreview.style.display = 'block';
+    editDropzone.classList.add('has-image');
+  } else {
+    editPreview.style.display = 'none';
+    editDropzone.classList.remove('has-image');
+  }
   document.getElementById('editDescription').value  = p.description || '';
   document.getElementById('editFeatures').value     = Array.isArray(p.features) ? p.features.join(', ') : '';
   document.getElementById('editFeatured').checked   = !!p.featured;
