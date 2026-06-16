@@ -101,7 +101,7 @@ async function sendPasswordRecovery() {
     msg.style.display = 'block';
 
     if (res.ok && data.success) {
-      msg.innerHTML = `<span style="color:#16a34a;">✓ ${data.message}</span>`;
+      msg.innerHTML = `<span style="color:#16a34a;">✓ Password sent to your WhatsApp.</span>`;
       btn.style.display = 'none';
     } else {
       msg.innerHTML = `<span style="color:#dc2626;">${data.error || 'Failed to send. Check that email is configured in .env'}</span>`;

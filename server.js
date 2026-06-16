@@ -174,25 +174,16 @@ app.post('/api/admin/login', loginLimiter, (req, res) => {
 // ─── Admin Forgot Password ───────────────────────────────────────────────────
 
 app.post('/api/admin/forgot-password', async (req, res) => {
-  const adminEmail = process.env.ADMIN_EMAIL;
-
-  if (!adminEmail) {
-    return res.status(400).json({
-      error: 'No admin email is configured on the server. Please ask your developer to set ADMIN_EMAIL in the .env file.'
-    });
-  }
-
   try {
-    await sendEmail(
-      'Admin Password Recovery — Al-Hammad Associate',
-      `Hello,\n\nYou requested a password recovery for the Al-Hammad Associate admin dashboard.\n\nYour admin password is:\n\n   ${ADMIN_PASSWORD}\n\nYou can log in at: http://localhost:${process.env.PORT || 3000}/admin.html\n\nIf you did not request this, please ignore this email.\n\n— Al-Hammad Associate System`
+    await sendWhatsApp(
+      `🔐 *Al-Hammad Associate — Password Recovery*\n\nYour admin password is:\n\n   ${ADMIN_PASSWORD}\n\nKeep this message private.`
     );
-    console.log(`[FORGOT-PASSWORD] Recovery email sent to ${adminEmail}`);
-    res.json({ success: true, message: 'Recovery email sent, please check inbox.' });
+    console.log('[FORGOT-PASSWORD] Password sent via WhatsApp');
+    res.json({ success: true, message: 'Password sent to your WhatsApp. Please check your messages.' });
   } catch (err) {
-    console.error('[FORGOT-PASSWORD] Email failed:', err.message);
+    console.error('[FORGOT-PASSWORD] WhatsApp failed:', err.message);
     res.status(500).json({
-      error: 'Failed to send email. Please check the email credentials in your .env file, or contact your developer.'
+      error: 'Failed to send WhatsApp message. Please check your Twilio credentials.'
     });
   }
 });
